@@ -2,7 +2,7 @@
 
 _pkgname=mauikit-terminal
 pkgname=$_pkgname-git
-pkgver=4.0.0.alpha.20240502
+pkgver=4.0.0.r4.g767512f
 pkgrel=1
 pkgdesc='Terminal support components for Maui applications'
 url='https://invent.kde.org/maui/mauikit-terminal'
@@ -21,24 +21,17 @@ provides=($_pkgname)
 conflicts=($_pkgname)
 source=(git+$url.git)
 sha256sums=('SKIP')
+
 pkgver() {
   cd $_pkgname
-  if git tag | grep v4
-  then
-  ( set -o pipefail
-    git describe --long 2>/dev/null | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' ||
-    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-  )
-  else
-    echo "4.0.0.alpha.`date "+%Y%m%d"`"
-  fi
+  git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 build() {
   cmake -B build -S $_pkgname \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DBUILD_WITH_QT6=ON -Wno-dev \
+    -Wno-dev \
     -DCMAKE_INSTALL_LIBDIR=/usr/lib
   cmake --build build
 }

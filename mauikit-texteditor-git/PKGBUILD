@@ -3,8 +3,8 @@
 # Contributor: Gustavo Castro < gustawho [ at ] gmail [ dot ] com >
 
 pkgname=mauikit-texteditor-git
-pkgver=3.1.0.r39.g7ea6f86
-pkgrel=2
+pkgver=4.0.0.r2.ga9b9ac8
+pkgrel=1
 pkgdesc="MauiKit Text Editor components"
 arch=(x86_64 i686 armv7h aarch64)
 url="https://invent.kde.org/maui/mauikit-texteditor"

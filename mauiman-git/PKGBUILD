@@ -2,8 +2,8 @@
 
 _pkgname=mauiman
 pkgname=$_pkgname-git
-pkgver=3.1.0.r5.gd4f86c6
-pkgrel=2
+pkgver=4.0.0.r1.g4a7fa7d
+pkgrel=1
 pkgdesc='Maui Manager Library. Server and public library API.'
 url='https://invent.kde.org/maui/mauiman'
 arch=(x86_64 i686 armv7h aarch64)
@@ -11,7 +11,7 @@ license=(LGPL3)
 depends=(qt6-base)
 makedepends=(git extra-cmake-modules)
 groups=(maui)
-#provides=($_pkgname) #Arch repo is still Qt5
+provides=($_pkgname)
 conflicts=($_pkgname)
 source=(git+$url.git)
 sha256sums=('SKIP')
