@@ -34,6 +34,11 @@ VAR2=m
     makepkg --printsrcinfo > .SRCINFO
     rsync {PKGBUILD,.SRCINFO} "$DEST/$VAR2/$VAR"
 
+  VAR=mauikit-texteditor-git
+  cd "$BASE/$VAR"
+    makepkg --printsrcinfo > .SRCINFO
+    rsync {PKGBUILD,.SRCINFO} "$DEST/$VAR2/$VAR"
+
   VAR=maui-pix-git
   cd "$BASE/$VAR"
     makepkg --printsrcinfo > .SRCINFO
