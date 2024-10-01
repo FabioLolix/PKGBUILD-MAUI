@@ -18,7 +18,7 @@ depends=(mauikit-git ki18n kcoreaddons syntax-highlighting
          # namcap implicit depends
          glibc gcc-libs qt6-base qt6-declarative)
 makedepends=(git extra-cmake-modules)
-#provides=(mauikit-texteditor)
+provides=(mauikit-texteditor)
 conflicts=(mauikit-texteditor)
 source=(git+$url.git)
 sha256sums=('SKIP')
