@@ -1,42 +1,46 @@
+# Maintainer: Fabio 'Lolix' Loli <fabio.loli@disroot.org> -> https://github.com/FabioLolix
+# Contributor: KaMeHb-UA
+
 pkgname=maui-bonsai-git
-pkgver=r23.ec26222
+pkgver=1.1.3.r11.g7cdda61
 pkgrel=1
 pkgdesc="Mobile Git repository manager"
-arch=(x86_64 i686 arm armv6h armv7h aarch64)
+arch=(x86_64 i686 armv7h aarch64)
 url="https://invent.kde.org/maui/bonsai"
 license=(GPL3)
 depends=(
-  'ki18n'
-  'knotifications'
-  'kio'
-  'attica'
-  'mauikit'
-  'mauikit-filebrowsing'
-  'kirigami2'
-  'qt5-svg'
-  'qt5-quickcontrols2'
-  'qt5-multimedia'
-  'libgit2'
+  ki18n
+  knotifications
+  kio
+  attica
+  mauikit-git
+  mauikit-filebrowsing-git
+  kirigami2
+  qt5-svg
+  qt5-quickcontrols2
+  qt5-multimedia
+  libgit2
 )
-makedepends=('git' 'extra-cmake-modules')
+makedepends=(git 'extra-cmake-modules')
 provides=('maui-bonsai')
 conflicts=('maui-bonsai')
-source=("git+${url}.git")
+source=("git+https://invent.kde.org/maui/bonsai.git#branch=qt6")
 sha256sums=('SKIP')
 
+
 pkgver() {
-  cd bonsai
-  ( set -o pipefail
-    git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
-    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-  )
+  cd "bonsai"
+  git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 build() {
-  cmake -DCMAKE_INSTALL_PREFIX=/usr -B build -S bonsai
-  make -C build
+  cmake -B build -S "bonsai" -Wno-dev \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_INSTALL_PREFIX=/usr
+
+  cmake --build build
 }
 
 package() {
-  make -C build DESTDIR="${pkgdir}" PREFIX=/usr install
+  DESTDIR="${pkgdir}" cmake --install build
 }
