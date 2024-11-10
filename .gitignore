@@ -19,3 +19,5 @@ s*.png
 
 */*/src
 */*/pkg
+
+.SRCINFO
