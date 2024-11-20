@@ -1,0 +1,23 @@
+# Maintainer: Fabio 'Lolix' Loli <fabio.loli@disroot.org> -> https://github.com/FabioLolix
+# Contributor: Antonio Rojas <arojas@archlinux.org>
+
+pkgname=mauiman3
+pkgver=3.1.0
+pkgrel=1
+pkgdesc='Maui Manager Library. Server and public library API.'
+url='https://mauikit.org/'
+arch=(x86_64)
+license=(LGPL-3.0-only)
+depends=(qt5-systems)
+makedepends=(extra-cmake-modules)
+source=(https://download.kde.org/stable/maui/mauiman/$pkgver/mauiman-$pkgver.tar.xz)
+sha256sums=('5c741f1fcff75f4c69fd8ef86cd428930254222cf7f58b87cad228ba3a92c290')
+
+build() {
+  cmake -B build -S mauiman-$pkgver
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}
