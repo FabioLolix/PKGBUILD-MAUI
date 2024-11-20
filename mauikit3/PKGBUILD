@@ -1,0 +1,35 @@
+
+
+pkgname=mauikit3
+pkgver=3.1.0
+pkgrel=1
+pkgdesc='Templated convergent controls and multi-platform utilities for Maui applications'
+url='https://mauikit.org/'
+arch=(x86_64)
+license=(LGPL-3.0-only)
+depends=(gcc-libs
+         glibc
+         kcoreaddons5
+         ki18n5
+         kirigami2
+         knotifications5
+         kwindowsystem5
+         libxcb
+         mauiman3
+         qt5-base
+         qt5-declarative
+         qt5-quickcontrols2
+         qt5-svg
+         qt5-x11extras)
+makedepends=(extra-cmake-modules)
+source=(https://download.kde.org/stable/maui/mauikit/$pkgver/mauikit-$pkgver.tar.xz)
+sha256sums=('bf5216cbb93767e0e54ac11f02e057a0a93173f8c10354ccf7eece568356f6ec')
+
+build() {
+  cmake -B build -S mauikit-$pkgver
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+}
