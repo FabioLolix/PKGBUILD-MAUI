@@ -1,6 +1,6 @@
 #! /bin/bash
 
-BASE=~/Dev/Github/PKGBUILDS-MAUI/
+BASE=~/Dev/Github/PKGBUILD-MAUI/
 DEST=~/Dev/AUR
 
 
@@ -45,6 +45,11 @@ VAR2=m
     rsync {PKGBUILD,.SRCINFO} "$DEST/$VAR2/$VAR"
 
   VAR=maui-pix-git
+  cd "$BASE/$VAR"
+    makepkg --printsrcinfo > .SRCINFO
+    rsync {PKGBUILD,.SRCINFO} "$DEST/$VAR2/$VAR"
+
+  VAR=maui-station-git
   cd "$BASE/$VAR"
     makepkg --printsrcinfo > .SRCINFO
     rsync {PKGBUILD,.SRCINFO} "$DEST/$VAR2/$VAR"
