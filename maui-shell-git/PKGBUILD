@@ -1,13 +1,13 @@
-# Maintainer: Wachid Adi Nugroho <wachidadinugroho.maya@gmail.com>
+# Maintainer: Fabio 'Lolix' Loli <fabio.loli@disroot.org> -> https://github.com/FabioLolix
+# Contributor: Wachid Adi Nugroho <wachidadinugroho.maya@gmail.com>
 
-_pkgname=maui-shell
-pkgname=$_pkgname-git
-pkgver=0.6.6.r11.g8272456
+pkgname=maui-shell-git
+pkgver=0.6.6.r17.geefee15
 pkgrel=1
-pkgdesc='Maui Shell is a convergent shell for desktops, tablets, and phones.'
-url='https://github.com/Nitrux/maui-shell'
-arch=(x86_64 i686 arm armv6h armv7h aarch64)
-license=(LGPL3)
+pkgdesc="Maui Shell is a convergent shell for desktops, tablets, and phones"
+arch=(x86_64 i686 armv7h aarch64)
+url="https://github.com/Nitrux/maui-shell"
+license=(LGPL-3.0-only)
 depends=(bluedevil
          cask-server-git
          fontconfig
@@ -49,35 +49,30 @@ depends=(bluedevil
          prison
          qt6-base
          qt6-declarative
-         qt6-quickcontrols2
          qt6-svg
          qt6-wayland
          solid)
 makedepends=(git extra-cmake-modules)
 optdepends=('maui-settings-git: Settings Manager Apps for the Maui DE')
 groups=(maui)
-provides=($_pkgname)
-conflicts=($_pkgname)
-source=(git+$url.git)
+provides=(maui-shell)
+conflicts=(maui-shell)
+source=("git+https://github.com/Nitrux/maui-shell.git")
 sha256sums=('SKIP')
 
 pkgver() {
-  cd $_pkgname
-  ( set -o pipefail
-    git describe --long 2>/dev/null | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' ||
-    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-  )
+  cd maui-shell
+  git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 build() {
-  cmake -B build -S $_pkgname \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib
+  cmake -B build -S "maui-shell" -Wno-dev \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_INSTALL_PREFIX=/usr
+
   cmake --build build
 }
 
 package() {
-  DESTDIR="$pkgdir" cmake --install build
-  install -Dm644 $_pkgname/LICENSE -t "${pkgdir}"/usr/share/licenses/$_pkgname
+  DESTDIR="${pkgdir}" cmake --install build
 }
